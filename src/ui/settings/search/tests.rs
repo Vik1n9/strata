@@ -15,6 +15,7 @@ fn localized_setting_titles_keep_stable_search_targets() {
                 ("ko", "언어"),
                 ("ru", "Язык"),
                 ("zh-CN", "语言"),
+                ("zh-TW", "語言"),
             ] {
                 rust_i18n::set_locale(locale);
                 for query in [query, "Language"] {
@@ -61,6 +62,15 @@ fn localized_setting_titles_keep_stable_search_targets() {
                 assert!(
                     find_matches(&normalized(query)).ids.contains(id),
                     "zh-CN: {query}"
+                );
+            }
+            rust_i18n::set_locale("zh-TW");
+            // The titles are 顯示「F1 快速鍵」按鈕 and Omarchy 變體.
+            for (query, id) in [("快速鍵按鈕", "hints"), ("Omarchy變體", "omarchy-variant")]
+            {
+                assert!(
+                    find_matches(&normalized(query)).ids.contains(id),
+                    "zh-TW: {query}"
                 );
             }
         },
